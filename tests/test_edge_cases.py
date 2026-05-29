@@ -8,6 +8,12 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+# Skip GUI-dependent tests in headless CI (no DISPLAY)
+_has_display = bool(os.environ.get("DISPLAY")) or os.name == "nt"
+skip_gui = pytest.mark.skipif(
+    not _has_display, reason="No display server (headless CI)"
+)
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -170,14 +176,15 @@ class TestTyperEdgeCases:
         t = Typer()
         t.type_text("")  # Should not crash
 
+    @skip_gui
     def test_unicode_text(self):
         """Unicode text should be handled."""
         from voiceflow.typer import Typer
 
         t = Typer()
-        # Should not crash (though may not type correctly without proper keyboard layout)
         t.type_text("नमस्ते दुनिया")
 
+    @skip_gui
     def test_special_characters(self):
         """Special characters should be handled."""
         from voiceflow.typer import Typer
