@@ -23,17 +23,13 @@ a = Analysis(
         'openai',
         'sounddevice',
         'numpy',
-        'pynput',
         'pynput.keyboard',
         'pynput.keyboard._win32',
-        'pynput.mouse',
         'pynput.mouse._win32',
-        'pystray',
         'pystray._win32',
         'PIL',
         'PIL.Image',
         'PIL.ImageDraw',
-        'pkg_resources',
     ],
     hookspath=[],
     hooksconfig={},
@@ -86,5 +82,5 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     # icon='icons/mic.ico',  # Uncomment when icon is available
-    version='version_info.txt',  # Optional: version info file
+    # version='version_info.txt',  # Optional: create version_info.txt for Windows version tab
 )
