@@ -30,9 +30,3 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest tests/ -v --tb=short
-
-      - name: Upload coverage report
-        if: matrix.python-version == '3.13'
-        run: |
-          pip install pytest-cov
-          python -m pytest tests/ --cov=voiceflow --cov-report=term-missing -v

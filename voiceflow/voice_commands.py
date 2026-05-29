@@ -142,18 +142,19 @@ class VoiceCommandProcessor:
         Returns:
             True if command was executed successfully
         """
-        from pynput.keyboard import Controller, Key
-
-        keyboard = Controller()
         success = True
 
         try:
             if command.action == "press_key":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 key = self._resolve_key(command.args[0])
                 keyboard.press(key)
                 keyboard.release(key)
 
             elif command.action == "press_key_twice":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 key = self._resolve_key(command.args[0])
                 keyboard.press(key)
                 keyboard.release(key)
@@ -162,6 +163,8 @@ class VoiceCommandProcessor:
                 keyboard.release(key)
 
             elif command.action == "delete_words":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 n = command.args[0]
                 for _ in range(n):
                     with keyboard.pressed(Key.shift, Key.ctrl):
@@ -171,6 +174,8 @@ class VoiceCommandProcessor:
                     keyboard.release(Key.delete)
 
             elif command.action == "delete_sentence":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 with keyboard.pressed(Key.ctrl):
                     keyboard.press(Key.shift)
                     keyboard.press(Key.left)
@@ -180,18 +185,24 @@ class VoiceCommandProcessor:
                 keyboard.release(Key.delete)
 
             elif command.action == "delete_last":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 # Delete last "utterance" -- approximate by selecting last 100 chars
                 with keyboard.pressed(Key.shift, Key.ctrl):
                     keyboard.press(Key.left)
                     keyboard.release(Key.left)
 
             elif command.action == "delete_all_session":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 for _ in self._typed_this_session:
                     keyboard.press(Key.backspace)
                     keyboard.release(Key.backspace)
                 self._typed_this_session.clear()
 
             elif command.action == "undo":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 with keyboard.pressed(Key.ctrl):
                     keyboard.press("z")
                     keyboard.release("z")
@@ -213,21 +224,29 @@ class VoiceCommandProcessor:
                 typer.type_text(command.args[0])
 
             elif command.action == "select_all":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 with keyboard.pressed(Key.ctrl):
                     keyboard.press("a")
                     keyboard.release("a")
 
             elif command.action == "copy":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 with keyboard.pressed(Key.ctrl):
                     keyboard.press("c")
                     keyboard.release("c")
 
             elif command.action == "paste":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 with keyboard.pressed(Key.ctrl):
                     keyboard.press("v")
                     keyboard.release("v")
 
             elif command.action == "cut":
+                from pynput.keyboard import Controller, Key
+                keyboard = Controller()
                 with keyboard.pressed(Key.ctrl):
                     keyboard.press("x")
                     keyboard.release("x")
@@ -265,7 +284,10 @@ class VoiceCommandProcessor:
     @staticmethod
     def _resolve_key(key_str: str):
         """Convert a key name string to a pynput Key or character."""
-        from pynput.keyboard import Key
+        try:
+            from pynput.keyboard import Key
+        except ImportError:
+            return key_str
 
         key_map = {
             "enter": Key.enter,

@@ -198,8 +198,8 @@ class TestVoiceCommandEdgeCases:
         assert cmd is None
         assert text == ""
 
-    def test_only_command(self):
-        """Transcript that is only a command."""
+    def test_command_only_returns_empty_text(self):
+        """Transcript that is only a command returns empty remaining text."""
         from voiceflow.voice_commands import VoiceCommandProcessor
 
         proc = VoiceCommandProcessor()
@@ -213,7 +213,6 @@ class TestVoiceCommandEdgeCases:
         from voiceflow.voice_commands import VoiceCommandProcessor
 
         proc = VoiceCommandProcessor()
-        # Should match the first command
         cmd, text = proc.process("hello new line world")
         assert cmd is not None
 
