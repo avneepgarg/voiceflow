@@ -122,24 +122,31 @@ class TrayApp:
         state_label = f"Status: {self._state.value.capitalize()}"
         llm_label = f"LLM Cleanup: {'On' if self._llm_enabled else 'Off'}"
 
+        def make_menu_item(text, action=None, enabled=True):
+            """Create a MenuItem compatible with all pystray versions."""
+            return pystray.MenuItem(text, action, enabled=enabled)
+
         items = [
-            pystray.MenuItem(state_label, enabled=False),
-            pystray.MenuItem(llm_label, enabled=False),
+            make_menu_item(state_label, enabled=False),
+            make_menu_item(llm_label, enabled=False),
             pystray.Menu.SEPARATOR,
-            pystray.MenuItem(
-                "Toggle Recording", self._on_toggle_recording
-            ) if self.on_toggle_recording else pystray.MenuItem(
-                "Toggle Recording", enabled=False
-            ),
-            pystray.MenuItem(
-                "Toggle LLM", self._on_toggle_click
-            ) if self.on_toggle_llm else pystray.MenuItem(
-                "Toggle LLM", enabled=False
-            ),
-            pystray.Menu.SEPARATOR,
-            pystray.MenuItem("Settings...", self._on_settings),
-            pystray.MenuItem("Quit", self._tray_quit),
         ]
+
+        if self.on_toggle_recording:
+            items.append(make_menu_item("Toggle Recording", self._on_toggle_recording))
+        else:
+            items.append(make_menu_item("Toggle Recording", enabled=False))
+
+        if self.on_toggle_llm:
+            items.append(make_menu_item("Toggle LLM", self._on_toggle_click))
+        else:
+            items.append(make_menu_item("Toggle LLM", enabled=False))
+
+        items.extend([
+            pystray.Menu.SEPARATOR,
+            make_menu_item("Settings...", self._on_settings),
+            make_menu_item("Quit", self._tray_quit),
+        ])
 
         return pystray.Menu(*items)
 

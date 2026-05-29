@@ -13,10 +13,7 @@ a = Analysis(
     ['voiceflow/main.py'],
     pathex=[],
     binaries=[],
-    datas=[
-        # Include tray icon if available
-        # ('icons/mic.ico', 'icons'),
-    ],
+    datas=[],
     hiddenimports=[
         'faster_whisper',
         'faster_whisper.backends',
@@ -35,7 +32,6 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[
-        # Exclude heavy unused packages to reduce .exe size
         'matplotlib',
         'tkinter',
         'PyQt5',
@@ -54,11 +50,6 @@ a = Analysis(
     noarchive=False,
 )
 
-# Remove unnecessary binaries
-a.binaries = [b for b in a.binaries if not b[0].startswith((
-    'libcrypto', 'libssl',  # Not needed for basic HTTPS
-))]
-
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 exe = EXE(
@@ -75,12 +66,10 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,  # GUI app (no terminal window)
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    # icon='icons/mic.ico',  # Uncomment when icon is available
-    # version='version_info.txt',  # Optional: create version_info.txt for Windows version tab
 )
