@@ -6,10 +6,6 @@ Pillow>=9.0.0
 openai>=1.50.0
 requests>=2.31.0
 
-# Platform-specific (Windows GUI)
-# pynput>=1.7.0      # Install manually: pip install pynput
-# pystray>=0.19.0    # Install manually: pip install pystray
-
 # Dev dependencies (for CI)
 pytest>=7.0.0
 pytest-mock>=3.0.0
