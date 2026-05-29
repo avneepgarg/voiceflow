@@ -1390,11 +1390,11 @@ Generated in CI (never committed, never downloaded):
 
 ## Verification Checklist (overall)
 
-- [ ] GitHub Actions CI runs unit tests on every commit
-- [ ] Colab notebooks verify GPU transcription accuracy
-- [ ] Windows .exe builds successfully via CI artifact
-- [ ] Flutter mobile builds via CI artifact
-- [ ] No Whisper models bundled in .exe (downloaded on first run)
-- [ ] LLM features use free tier APIs for testing
-- [ ] Local machine RAM usage stays under 2GB during development
-- [ ] Total development cost: $0
+- [x] GitHub Actions CI runs unit tests on every commit
+- [x] Colab notebooks verify GPU transcription accuracy
+- [x] Windows .exe builds successfully via CI artifact
+- [ ] Flutter mobile builds via CI artifact (not started)
+- [x] No Whisper models bundled in .exe (downloaded on first run)
+- [x] LLM features use free tier APIs for testing
+- [x] Local machine RAM usage stays under 2GB during development
+- [x] Total development cost: $0
