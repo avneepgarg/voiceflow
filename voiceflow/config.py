@@ -105,6 +105,7 @@ def save_config(config: Dict[str, Any], config_path: Path = None):
         config_path = get_config_path()
 
     try:
+        config_path.parent.mkdir(parents=True, exist_ok=True)
         with open(config_path, "w") as f:
             json.dump(config, f, indent=2)
         logger.debug("Config saved to %s", config_path)

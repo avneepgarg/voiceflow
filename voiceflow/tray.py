@@ -138,12 +138,12 @@ class TrayApp:
             ),
             pystray.Menu.SEPARATOR,
             pystray.MenuItem("Settings...", self._on_settings),
-            pystray.MenuItem("Quit", self._on_quit),
+            pystray.MenuItem("Quit", self._tray_quit),
         ]
 
         return pystray.Menu(*items)
 
-    def _on_quit(self, icon, item):
+    def _tray_quit(self, icon, item):
         if self.on_quit:
             self.on_quit()
         self.stop()

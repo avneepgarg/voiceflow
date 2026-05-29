@@ -7,6 +7,8 @@ Modules with optional deps (sounddevice, etc.): scribe, translation, tray.
 Import those directly: from voiceflow.scribe import ScribeMode
 """
 
+__version__ = "0.1.0"
+
 # Safe imports -- these work with just numpy
 from voiceflow.audio import AudioRecorder, AudioConfig
 from voiceflow.transcriber import Transcriber, TranscriptionConfig
@@ -21,6 +23,8 @@ from voiceflow.wake_word import WakeWordDetector, WakeWordConfig
 from voiceflow.config import load_config, save_config, get_config_path
 
 __all__ = [
+    # Version
+    "__version__",
     # Audio
     "AudioRecorder", "AudioConfig",
     # Transcription

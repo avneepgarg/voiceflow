@@ -179,6 +179,11 @@ class VoiceFlow:
         """Callback from tray menu quit."""
         logger.info("Shutting down...")
         self._running = False
+        if self._tray:
+            self._tray.stop()
+        # Force exit since listener.join() blocks
+        import os
+        os._exit(0)
 
     def _on_toggle_llm(self):
         """Callback from tray menu LLM toggle."""
