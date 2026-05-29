@@ -261,35 +261,57 @@ class TestVocabularyEdgeCases:
 
     def test_add_empty_list(self):
         """Adding empty list should not crash."""
+        import tempfile, os
         from voiceflow.vocabulary import VocabularyManager
 
-        vm = VocabularyManager(vocab_path=":memory:")
-        vm.add_terms([])
-        # get_hotwords returns a comma-separated string, empty string when no terms
-        result = vm.get_hotwords()
-        assert result == "" or isinstance(result, str)
+        with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+            tmp = f.name
+        try:
+            vm = VocabularyManager(vocab_path=tmp)
+            vm.add_terms([])
+            result = vm.get_hotwords()
+            assert result == "" or isinstance(result, str)
+        finally:
+            os.unlink(tmp)
 
     def test_add_duplicate_terms(self):
         """Duplicate terms should be deduplicated."""
+        import tempfile, os
         from voiceflow.vocabulary import VocabularyManager
 
-        vm = VocabularyManager(vocab_path=":memory:")
-        vm.add_terms(["docker", "docker", "kubernetes"])
-        hotwords = vm.get_hotwords()
-        # Hotwords is a comma-separated string
-        assert hotwords.count("docker") == 1
+        with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+            tmp = f.name
+        try:
+            vm = VocabularyManager(vocab_path=tmp)
+            vm.add_terms(["docker", "docker", "kubernetes"])
+            hotwords = vm.get_hotwords()
+            assert hotwords.count("docker") == 1
+        finally:
+            os.unlink(tmp)
 
     def test_remove_nonexistent(self):
         """Removing a term that doesn't exist should not crash."""
+        import tempfile, os
         from voiceflow.vocabulary import VocabularyManager
 
-        vm = VocabularyManager(vocab_path=":memory:")
-        vm.remove_term("nonexistent")  # Should not crash
+        with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+            tmp = f.name
+        try:
+            vm = VocabularyManager(vocab_path=tmp)
+            vm.remove_term("nonexistent")
+        finally:
+            os.unlink(tmp)
 
     def test_stats_empty(self):
         """Stats on empty vocabulary should work."""
+        import tempfile, os
         from voiceflow.vocabulary import VocabularyManager
 
-        vm = VocabularyManager(vocab_path=":memory:")
-        stats = vm.stats
-        assert stats["domain_terms"] == 0
+        with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+            tmp = f.name
+        try:
+            vm = VocabularyManager(vocab_path=tmp)
+            stats = vm.stats
+            assert stats["domain_terms"] == 0
+        finally:
+            os.unlink(tmp)
